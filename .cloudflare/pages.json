@@ -1,4 +1,6 @@
 {
+  "projectName": "tarkwa",
+  "customDomain": "tarkwa.icebergsites.com",
   "build": {
     "command": "npm run build",
     "destination": "dist"
