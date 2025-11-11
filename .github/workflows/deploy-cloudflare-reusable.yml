@@ -1,0 +1,109 @@
+name: Reusable Cloudflare Pages Deployment
+
+on:
+  workflow_call:
+    inputs:
+      project-name:
+        description: 'Cloudflare Pages project name (defaults to repository name)'
+        required: false
+        type: string
+      custom-domain:
+        description: 'Custom domain to configure (e.g., myapp.icebergsites.com)'
+        required: false
+        type: string
+      build-command:
+        description: 'Build command'
+        required: false
+        type: string
+        default: 'npm run build'
+      output-directory:
+        description: 'Build output directory'
+        required: false
+        type: string
+        default: 'dist'
+      node-version:
+        description: 'Node.js version'
+        required: false
+        type: string
+        default: '18'
+      install-command:
+        description: 'Package install command'
+        required: false
+        type: string
+        default: 'npm ci'
+      working-directory:
+        description: 'Working directory for build'
+        required: false
+        type: string
+        default: '.'
+    secrets:
+      cloudflare-api-token:
+        description: 'Cloudflare API Token'
+        required: true
+      cloudflare-account-id:
+        description: 'Cloudflare Account ID'
+        required: true
+      build-env-vars:
+        description: 'Build environment variables (JSON format)'
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    name: Deploy to Cloudflare Pages
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ${{ inputs.working-directory }}
+        run: ${{ inputs.install-command }}
+
+      - name: Build
+        working-directory: ${{ inputs.working-directory }}
+        run: ${{ inputs.build-command }}
+        env: ${{ fromJSON(secrets.build-env-vars || '{}') }}
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.cloudflare-api-token }}
+          accountId: ${{ secrets.cloudflare-account-id }}
+          projectName: ${{ inputs.project-name || github.event.repository.name }}
+          directory: ${{ inputs.working-directory }}/${{ inputs.output-directory }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
+
+      - name: Add Custom Domain
+        if: inputs.custom-domain != ''
+        run: |
+          npm install -g wrangler
+          wrangler pages project domains add ${{ inputs.custom-domain }} \
+            --project-name=${{ inputs.project-name || github.event.repository.name }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.cloudflare-api-token }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.cloudflare-account-id }}
+
+      - name: Deployment Summary
+        run: |
+          echo "### 🚀 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Project:** ${{ inputs.project-name || github.event.repository.name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Domain:** https://${{ inputs.project-name || github.event.repository.name }}.pages.dev" >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ inputs.custom-domain }}" ]; then
+            echo "**Custom Domain:** https://${{ inputs.custom-domain }}" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY

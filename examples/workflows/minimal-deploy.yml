@@ -1,0 +1,15 @@
+# Minimal deployment - uses all defaults
+# Copy to: .github/workflows/deploy.yml
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      custom-domain: 'myapp.icebergsites.com'  # CHANGE THIS
+    secrets: inherit

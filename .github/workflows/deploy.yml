@@ -13,50 +13,18 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
-    name: Deploy to Cloudflare Pages
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-        env:
-          # Add your environment variables here as needed
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Use repository variable or fallback to repo name
-          projectName: ${{ vars.CF_PROJECT_NAME || 'tarkwa' }}
-          # Use repository variable or fallback to dist
-          directory: ${{ vars.BUILD_OUTPUT_DIR || 'dist' }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
-
-      - name: Add Custom Domain (if configured)
-        if: vars.CF_CUSTOM_DOMAIN != ''
-        run: |
-          npm install -g wrangler
-          wrangler pages project domains add ${{ vars.CF_CUSTOM_DOMAIN }} \
-            --project-name=${{ vars.CF_PROJECT_NAME || 'tarkwa' }}
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      project-name: 'tarkwa'
+      custom-domain: 'tarkwa.icebergsites.com'
+      build-command: 'npm run build'
+      output-directory: 'dist'
+      node-version: '18'
+    secrets:
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      build-env-vars: |
+        {
+          "VITE_SUPABASE_URL": "${{ secrets.VITE_SUPABASE_URL }}",
+          "VITE_SUPABASE_ANON_KEY": "${{ secrets.VITE_SUPABASE_ANON_KEY }}"
+        }

@@ -1,0 +1,22 @@
+# Monorepo deployment (deploy from subfolder)
+# Copy to: .github/workflows/deploy.yml
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/web/**'  # Only trigger when web package changes
+
+jobs:
+  deploy:
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      project-name: 'monorepo-web'
+      custom-domain: 'web.myapp.icebergsites.com'
+      working-directory: 'packages/web'
+      install-command: 'pnpm install'
+      build-command: 'pnpm build'
+      node-version: '20'
+    secrets: inherit
