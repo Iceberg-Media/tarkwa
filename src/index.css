@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply mb-4;
+  }
+
+  h2 {
+    @apply mb-3.5;
+  }
+
+  h3 {
+    @apply mb-3;
+  }
+
+  p {
+    @apply mb-4 leading-[1.6];
+  }
+
+  section {
+    @apply py-[60px] px-5 md:py-[60px] md:px-5;
+  }
+
+  @media (max-width: 768px) {
+    section {
+      @apply py-10;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-premium-red text-white px-7 py-3.5 rounded-md font-semibold text-base uppercase tracking-wide;
+    @apply transition-all duration-300 ease-in-out text-center inline-flex items-center justify-center gap-2;
+    @apply shadow-[0_4px_12px_rgba(220,38,38,0.3)];
+    @apply hover:bg-[#b91c1c] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(220,38,38,0.4)];
+    @apply active:translate-y-0 active:shadow-[0_2px_8px_rgba(220,38,38,0.3)];
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-white text-white px-6 py-3 rounded-md font-semibold text-base uppercase tracking-wide;
+    @apply transition-all duration-300 ease-in-out text-center inline-flex items-center justify-center gap-2;
+    @apply hover:bg-white hover:text-premium-navy hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)];
+    @apply active:translate-y-0;
+  }
+
+  .btn-secondary-dark {
+    @apply bg-transparent border-2 border-premium-navy text-premium-navy px-6 py-3 rounded-md font-semibold text-base uppercase tracking-wide;
+    @apply transition-all duration-300 ease-in-out text-center inline-flex items-center justify-center gap-2;
+    @apply hover:bg-premium-navy hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)];
+    @apply active:translate-y-0;
+  }
+
+  .btn-secondary-red {
+    @apply bg-transparent border-2 border-premium-red text-premium-red px-6 py-3 rounded-md font-semibold text-base uppercase tracking-wide;
+    @apply transition-all duration-300 ease-in-out text-center inline-flex items-center justify-center gap-2;
+    @apply hover:bg-premium-red hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(220,38,38,0.3)];
+    @apply active:translate-y-0;
+  }
+
+  .btn-secondary-green {
+    @apply bg-transparent border-2 border-premium-green text-premium-green px-6 py-3 rounded-md font-semibold text-base uppercase tracking-wide;
+    @apply transition-all duration-300 ease-in-out text-center inline-flex items-center justify-center gap-2;
+    @apply hover:bg-premium-green hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(74,124,60,0.3)];
+    @apply active:translate-y-0;
+  }
+
+  .btn-primary-green {
+    @apply bg-premium-green text-white px-7 py-3.5 rounded-md font-semibold text-base uppercase tracking-wide;
+    @apply transition-all duration-300 ease-in-out text-center inline-flex items-center justify-center gap-2;
+    @apply shadow-[0_4px_12px_rgba(74,124,60,0.3)];
+    @apply hover:bg-[#3d6632] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(74,124,60,0.4)];
+    @apply active:translate-y-0 active:shadow-[0_2px_8px_rgba(74,124,60,0.3)];
+  }
+}
+
+@layer utilities {
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 0.8s ease-out;
+  }
+}
