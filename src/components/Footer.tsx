@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="max-w-[300px]">
             <div className="flex items-center gap-3 mb-3">
               <img
-                src="/Warriors Support.png"
+                src="/logo.png"
                 alt="Tarkwa Auto Transport"
                 className="h-16 w-auto"
               />
