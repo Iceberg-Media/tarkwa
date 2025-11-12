@@ -34,7 +34,7 @@ jobs:
       - name: Deploy to Cloudflare Pages
         run: |
           npm install -g wrangler
-          wrangler pages deploy dist --project-name=tarkwa --branch=main
+wrangler pages project create tarkwa --production-branch=main || true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
