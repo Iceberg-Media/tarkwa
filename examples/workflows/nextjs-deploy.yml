@@ -1,0 +1,19 @@
+# Next.js static export deployment
+# Copy to: .github/workflows/deploy.yml
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      project-name: 'my-nextjs-app'  # CHANGE THIS
+      custom-domain: 'nextapp.icebergsites.com'  # CHANGE THIS
+      build-command: 'npm run build'
+      output-directory: 'out'
+      node-version: '20'
+    secrets: inherit

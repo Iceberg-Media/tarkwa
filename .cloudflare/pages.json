@@ -1,0 +1,17 @@
+{
+  "projectName": "tarkwa",
+  "customDomain": "tarkwa.icebergsites.com",
+  "build": {
+    "command": "npm run build",
+    "destination": "dist"
+  },
+  "routes": [
+    {
+      "pattern": "/*",
+      "status_code": 200
+    }
+  ],
+  "environment": {
+    "NODE_VERSION": "18"
+  }
+}

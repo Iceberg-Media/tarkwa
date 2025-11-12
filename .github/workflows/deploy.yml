@@ -1,0 +1,30 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  deploy:
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      project-name: 'tarkwa'
+      custom-domain: 'tarkwa.icebergsites.com'
+      build-command: 'npm run build'
+      output-directory: 'dist'
+      node-version: '18'
+    secrets:
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      build-env-vars: |
+        {
+          "VITE_SUPABASE_URL": "${{ secrets.VITE_SUPABASE_URL }}",
+          "VITE_SUPABASE_ANON_KEY": "${{ secrets.VITE_SUPABASE_ANON_KEY }}"
+        }

@@ -1,0 +1,25 @@
+# Deploy to different domains based on branch
+# Copy to: .github/workflows/deploy.yml
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main, staging]
+
+jobs:
+  deploy-staging:
+    if: github.ref == 'refs/heads/staging'
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      project-name: 'myapp-staging'
+      custom-domain: 'staging.myapp.icebergsites.com'
+    secrets: inherit
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      project-name: 'myapp-production'
+      custom-domain: 'myapp.icebergsites.com'
+    secrets: inherit

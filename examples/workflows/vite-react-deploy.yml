@@ -1,0 +1,19 @@
+# Vite + React deployment
+# Copy to: .github/workflows/deploy.yml
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # Allow manual triggers
+
+jobs:
+  deploy:
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      custom-domain: 'myapp.icebergsites.com'  # CHANGE THIS
+      build-command: 'npm run build'
+      output-directory: 'dist'
+      node-version: '18'
+    secrets: inherit

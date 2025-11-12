@@ -1,0 +1,23 @@
+# Deployment with environment variables
+# Copy to: .github/workflows/deploy.yml
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    uses: hansakoch/tarkwa/.github/workflows/deploy-cloudflare-reusable.yml@main
+    with:
+      custom-domain: 'myapp.icebergsites.com'
+    secrets:
+      cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      build-env-vars: |
+        {
+          "VITE_API_URL": "${{ secrets.API_URL }}",
+          "VITE_SUPABASE_URL": "${{ secrets.SUPABASE_URL }}",
+          "VITE_SUPABASE_KEY": "${{ secrets.SUPABASE_KEY }}"
+        }
