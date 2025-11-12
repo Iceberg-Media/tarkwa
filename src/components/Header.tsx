@@ -24,7 +24,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-4">
             <img
-              src="/Warriors Support.png"
+              src="/logo.png"
               alt="Tarkwa Auto Transport"
               className="h-20 w-auto"
             />
