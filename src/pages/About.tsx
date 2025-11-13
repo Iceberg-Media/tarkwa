@@ -1,4 +1,5 @@
-import { MapPin, User, Building2 } from 'lucide-react';
+import { MapPin, User, Building2, Phone, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function About() {
   return (
@@ -110,6 +111,29 @@ export default function About() {
             </div>
           </div>
 
+          <div className="mt-16 mb-16 bg-gradient-to-br from-[#1a365d] to-[#0f1419] text-white p-10 rounded-lg shadow-[0_8px_24px_rgba(0,0,0,0.15)] text-center">
+            <h2 className="text-3xl font-bold mb-4">Get Your Free Quote Today</h2>
+            <p className="text-lg mb-8 max-w-2xl mx-auto text-white/90">
+              Contact us now for a personalized quote. We provide same-day responses and competitive rates for all vehicle transportation needs.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/contact"
+                className="btn-primary group"
+              >
+                Request Free Quote
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a
+                href="tel:07778878862"
+                className="btn-secondary backdrop-blur-sm bg-white/10 hover:bg-white hover:text-[#1a365d]"
+              >
+                <Phone size={20} />
+                07778 878862
+              </a>
+            </div>
+          </div>
+
           <div className="mt-16 bg-[#1a365d] text-white p-8 rounded-lg shadow-[0_8px_24px_rgba(0,0,0,0.15)] transition-all duration-300 hover:shadow-[0_12px_32px_rgba(0,0,0,0.2)]">
             <h2 className="text-2xl font-bold mb-6">Company Details</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -125,6 +149,29 @@ export default function About() {
                 <p className="leading-relaxed">VAT Number: 214 4851 23</p>
                 <p className="mt-4 leading-relaxed">Owner Operator: Paul Davies</p>
               </div>
+            </div>
+          </div>
+
+          <div className="mt-16 bg-gradient-to-r from-[#e53e3e] to-[#dc2626] text-white p-10 rounded-lg shadow-[0_8px_24px_rgba(229,62,62,0.3)] text-center">
+            <h2 className="text-3xl font-bold mb-4">Ready to Transport Your Vehicle?</h2>
+            <p className="text-lg mb-8 max-w-2xl mx-auto">
+              Contact Paul Davies for a personalized quote — Same-day response guaranteed
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/contact"
+                className="bg-white text-[#e53e3e] px-8 py-4 rounded-lg font-semibold text-lg uppercase tracking-wide transition-all duration-300 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] inline-flex items-center justify-center gap-2"
+              >
+                Get a Free Quote
+                <ArrowRight size={22} />
+              </Link>
+              <a
+                href="tel:07778878862"
+                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg uppercase tracking-wide transition-all duration-300 hover:bg-white hover:text-[#e53e3e] hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(0,0,0,0.2)] inline-flex items-center justify-center gap-2"
+              >
+                <Phone size={22} />
+                Call Now
+              </a>
             </div>
           </div>
         </div>
